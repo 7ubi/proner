@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home_view(request):
@@ -20,5 +21,9 @@ def login_view(request):
                 login(request, user)
                 return redirect('/')
             else:
-                return render(request, 'login/login.html', {'error': 'Username or Password invalid!'})
+                try:
+                    User.objects.get(username=username)
+                    return render(request, 'login/login.html', {'error': 'Password invalid!'})
+                except:
+                    return render(request, 'login/login.html', {'error': 'User does not exist!'})
     return render(request, 'login/login.html')
