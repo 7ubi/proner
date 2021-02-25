@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 
+
 # Create your views here.
 def home_view(request):
-    return render(request, 'generic/base.html')
+    return render(request, 'generic/home.html')
 
 
 def login_view(request):
