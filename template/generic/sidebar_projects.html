@@ -1,5 +1,5 @@
 {% for project in projects %}
-<a href="#" id="navbg" class="nav-link">
+<a href="/{{ project.slug }}" id="navbg" class="nav-link">
     {{ project.name }}
 </a>
 {% endfor %}

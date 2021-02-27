@@ -1,0 +1,37 @@
+{% extends 'generic/base.html' %}
+
+{% block hero %}
+    <div class="d-flex">
+        <div class="p-2">
+            <h1>{{ project.name }}</h1>
+        </div>
+        <div class="mt-auto ms-auto p-2">
+            <p>
+                <a href="/"> Home </a> > <a> {{ project.name }} </a>
+            </p>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <p>
+        {{ project.name }}
+    </p>
+
+    <button type="button" class="btn btnSec" data-bs-toggle="modal" data-bs-target="#create_task">
+      Create Task
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="create_task" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {% include 'Project/create_task.html' %}
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {% load static %}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{% static 'js/create_task.js' %}"></script>
+{% endblock %}

@@ -22,31 +22,27 @@ $(document).ready(function ($){
             Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
-                text: 'Project must have a name!',
+                text: 'Task must have a name!',
                 confirmButtonText: 'Try again',
             })
             return;
         }
         $.ajax({
-            url:'',
+            url: $(location).attr('pathname') + '/create_task',
             type:'POST',
             headers:{'X-CSRFToken': csrftoken},
             data:{
                 'name': $('#name').val()
             },
             success: function (data){
-                if(data['success']){
+                if(data['success']) {
+                    $('#name').val('')
                     Swal.fire({
                         icon: 'success',
-                        title: 'Project has been saved',
+                        title: 'Task has been saved',
                         confirmButtonText: 'Continue',
-                    })
-                }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'ERROR',
-                        text: data['error'],
-                        confirmButtonText: 'Try again',
+                    }).then(function (e){
+                        $('#create_task').modal('hide');
                     })
                 }
             }

@@ -1,0 +1,25 @@
+<div class="modal-dialog">
+    <div class="modal-content modal_bg">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="create_task_form">
+            <div class="modal-body">
+
+            {% csrf_token %}
+            <div>
+                <label for="name">
+                    Task name:
+                </label>
+                <input type="text" id="name" name="name" placeholder="Task name..." class="form-control form-input">
+            </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btnDan" data-bs-dismiss="modal">Close</button>
+                <input class="btn btnSec" type="submit" value="Create Task">
+            </div>
+        </form>
+    </div>
+</div>

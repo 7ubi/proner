@@ -20,6 +20,8 @@ from project.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
+    path('<slug:slug>', project_view),
+    path('<slug:slug>/create_task', create_task_view),
     path('login/', login_view),
     path('logout/', logout_view),
     path('create-project/', create_project_view),

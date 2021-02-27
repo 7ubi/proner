@@ -51,3 +51,19 @@ def create_project_view(request):
         p.save()
         return HttpResponse(json.dumps({'success': True}), content_type="application/json")
     return render(request, 'project/create_project.html')
+
+def project_view(request, slug):
+    try:
+        project = Project.objects.get(slug=slug)
+        return render(request, 'Project/show_project.html', {'project': project})
+    except:
+        redirect('/')
+
+def create_task_view(request, slug):
+    name = request.POST.get('name')
+
+    project = Project.objects.get(slug=slug)
+    task = Task(name=name, creator=request.user, project=project)
+    task.save()
+
+    return HttpResponse(json.dumps({'success': True}), content_type="application/json")
