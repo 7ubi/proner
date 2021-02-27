@@ -1,11 +1,20 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect, HttpResponse
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from .models import *
+import json
 
 
 # Create your views here.
+@login_required
 def home_view(request):
     return render(request, 'generic/home.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/login")
 
 
 def login_view(request):
@@ -28,3 +37,17 @@ def login_view(request):
                 except:
                     return render(request, 'login/login.html', {'error': 'User does not exist!'})
     return render(request, 'login/login.html')
+
+
+@login_required
+def create_project_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        if Project.objects.filter(name=name, creator=request.user).exists():
+            return HttpResponse(json.dumps({'success': False, 'error': 'Project already exists'}),
+                                content_type="application/json")
+
+        p = Project(name=name, creator=request.user)
+        p.save()
+        return HttpResponse(json.dumps({'success': True}), content_type="application/json")
+    return render(request, 'project/create_project.html')

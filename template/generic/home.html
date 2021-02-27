@@ -1,5 +1,18 @@
 {% extends 'generic/base.html' %}
 
+{% block hero %}
+    <div class="d-flex">
+        <div class="p-2">
+            <h1>Home</h1>
+        </div>
+        <div class="mt-auto ms-auto p-2">
+            <p>
+                Home > <a href="/"> Home </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
     <p>
     Hello, there {{ request.user.username }}!

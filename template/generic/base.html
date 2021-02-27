@@ -15,11 +15,17 @@
 <body>
     <div class="d-flex" id="wrapper">
         {% include 'generic/sidebar.html' %}
+        <div class="hero">
+            {% block hero %}
+            {% endblock %}
+        </div>
         <main class="content">
             {% block content %}
             {% endblock %}
         </main>
         </div>
     </div>
+    {% block javascript %}
+    {% endblock %}
 </body>
 </html>

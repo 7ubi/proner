@@ -9,3 +9,19 @@ main{
     margin-right: auto;
     font-size: large;
 }
+
+.hero{
+    width:100%;
+    background-color: #456B8C !important;
+    color: white;
+    padding: 10px 0px 10px 0px;
+}
+
+.hero a{
+    text-decoration: none;
+    color: white;
+}
+
+label{
+    margin-bottom: 5px;
+}
