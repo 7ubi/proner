@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'notzion.urls'
+ROOT_URLCONF = 'proner.urls'
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'notzion.wsgi.application'
+WSGI_APPLICATION = 'proner.wsgi.application'
 
 
 # Database
