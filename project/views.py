@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import *
 import json
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -11,10 +12,10 @@ import json
 def home_view(request):
     return render(request, 'generic/home.html')
 
-
+@login_required
 def logout_view(request):
     logout(request)
-    return redirect("/login")
+    return HttpResponseRedirect("/login")
 
 
 def login_view(request):
