@@ -38,7 +38,31 @@ def login_view(request):
                     return render(request, 'login/login.html', {'error': 'User does not exist!'})
     return render(request, 'login/login.html')
 
+def register_view(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        pw1 = request.POST.get('password1')
+        pw2 = request.POST.get('password2')
 
+        if pw1 == pw2:
+            user = User(username=username, email=email)
+            user.set_password(pw1)
+            user.save()
+
+            return HttpResponse(json.dumps({'success': True}), content_type="application/json")
+        return HttpResponse(json.dumps({'success': False, 'error': 'Passwords do not match'}),
+                            content_type="application/json")
+
+    return render(request, 'login/register.html')
+
+def check_username(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+
+        if User.objects.filter(username=username).exists():
+            return HttpResponse(json.dumps({'exists': True}), content_type="application/json")
+        return HttpResponse(json.dumps({'exists': False}), content_type="application/json")
 @login_required
 def create_project_view(request):
     if request.method == 'POST':
