@@ -7,13 +7,30 @@
         <form id="create_task_form">
             <div class="modal-body">
 
-            {% csrf_token %}
-            <div>
-                <label for="name">
-                    Task name:
-                </label>
-                <input type="text" id="name" name="name" placeholder="Task name..." class="form-control form-input">
-            </div>
+                {% csrf_token %}
+                <div>
+                    <label for="name">
+                        Task name:
+                    </label>
+                    <input type="text" id="name" name="name" placeholder="Task name..." class="form-control form-input">
+                </div>
+                <div>
+                    <label for="label">
+                        Label:
+                    </label>
+                    <br>
+                    <select class="form-select" id="label" name="label">
+                        <option>
+                            No Label
+                        </option>
+                        {% for label in labels %}
+                            <option>
+                                {{ label.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
 
             </div>
             <div class="modal-footer">

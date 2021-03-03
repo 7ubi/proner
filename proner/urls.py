@@ -23,8 +23,8 @@ urlpatterns = [
     path('logout', logout_view),
     path('signup', register_view),
     path('signup/check_username', check_username),
-    path('<slug:slug>', project_view),
-    path('<slug:slug>/create_task', create_task_view),
+    path('projects/<slug:slug>', project_view),
+    path('projects/<slug:slug>/create_task', create_task_view),
     path('login/', login_view),
     path('create-project/', create_project_view),
 ]

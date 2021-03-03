@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 def home_view(request):
     return render(request, 'generic/home.html')
 
+
 @login_required
 def logout_view(request):
     logout(request)
@@ -39,6 +40,7 @@ def login_view(request):
                     return render(request, 'login/login.html', {'error': 'User does not exist!'})
     return render(request, 'login/login.html')
 
+
 def register_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -57,6 +59,7 @@ def register_view(request):
 
     return render(request, 'login/register.html')
 
+
 def check_username(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -64,6 +67,8 @@ def check_username(request):
         if User.objects.filter(username=username).exists():
             return HttpResponse(json.dumps({'exists': True}), content_type="application/json")
         return HttpResponse(json.dumps({'exists': False}), content_type="application/json")
+
+
 @login_required
 def create_project_view(request):
     if request.method == 'POST':
@@ -77,18 +82,28 @@ def create_project_view(request):
         return HttpResponse(json.dumps({'success': True}), content_type="application/json")
     return render(request, 'project/create_project.html')
 
+
 def project_view(request, slug):
     try:
-        project = Project.objects.get(slug=slug)
-        return render(request, 'Project/show_project.html', {'project': project})
+        project = Project.objects.get(slug=slug, creator=request.user)
+        labels = Label.objects.filter(creator=request.user)
+        return render(request, 'Project/show_project.html', {'project': project, 'labels': labels})
     except:
-        redirect('/')
+        return redirect('/')
+
 
 def create_task_view(request, slug):
     name = request.POST.get('name')
+    label_name = request.POST.get('label')
 
     project = Project.objects.get(slug=slug)
-    task = Task(name=name, creator=request.user, project=project)
+    task = None
+    if label_name != 'No Label':
+        label = Label.objects.get(name=label_name, creator=request.user)
+        task = Task(name=name, creator=request.user, project=project, labels=label)
+    else:
+        task = Task(name=name, creator=request.user, project=project)
+
     task.save()
 
     return HttpResponse(json.dumps({'success': True}), content_type="application/json")

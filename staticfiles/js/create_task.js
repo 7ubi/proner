@@ -27,12 +27,14 @@ $(document).ready(function ($){
             })
             return;
         }
+        console.log($('#label').val())
         $.ajax({
             url: $(location).attr('pathname') + '/create_task',
             type:'POST',
             headers:{'X-CSRFToken': csrftoken},
             data:{
-                'name': $('#name').val()
+                'name': $('#name').val(),
+                'label': $('#label').val(),
             },
             success: function (data){
                 if(data['success']) {
