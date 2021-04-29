@@ -15,9 +15,32 @@
 {% endblock %}
 
 {% block content %}
-    <p>
-        {{ project.name }}
-    </p>
+    <table>
+
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {% for label in labels %}
+                    <th scope="col">
+                        {{ label.name }}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for tasks in tasks_by_label %}
+                <tr>
+                    {% for task in tasks %}
+                        <td>
+                            {{ task.name }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <button type="button" class="btn btnSec" data-bs-toggle="modal" data-bs-target="#create_task">
       Create Task

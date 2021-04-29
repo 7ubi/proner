@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import *
 import json
 from django.http import HttpResponseRedirect
 
@@ -69,41 +68,4 @@ def check_username(request):
         return HttpResponse(json.dumps({'exists': False}), content_type="application/json")
 
 
-@login_required
-def create_project_view(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        if Project.objects.filter(name=name, creator=request.user).exists():
-            return HttpResponse(json.dumps({'success': False, 'error': 'Project already exists'}),
-                                content_type="application/json")
 
-        p = Project(name=name, creator=request.user)
-        p.save()
-        return HttpResponse(json.dumps({'success': True}), content_type="application/json")
-    return render(request, 'project/create_project.html')
-
-
-def project_view(request, slug):
-    try:
-        project = Project.objects.get(slug=slug, creator=request.user)
-        labels = Label.objects.filter(creator=request.user)
-        return render(request, 'Project/show_project.html', {'project': project, 'labels': labels})
-    except:
-        return redirect('/')
-
-
-def create_task_view(request, slug):
-    name = request.POST.get('name')
-    label_name = request.POST.get('label')
-
-    project = Project.objects.get(slug=slug)
-    task = None
-    if label_name != 'No Label':
-        label = Label.objects.get(name=label_name, creator=request.user)
-        task = Task(name=name, creator=request.user, project=project, labels=label)
-    else:
-        task = Task(name=name, creator=request.user, project=project)
-
-    task.save()
-
-    return HttpResponse(json.dumps({'success': True}), content_type="application/json")

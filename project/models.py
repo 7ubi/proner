@@ -4,10 +4,6 @@ from colorfield.fields import ColorField
 from django.utils.text import slugify
 
 # Create your models here.
-class Label(models.Model):
-    name = models.CharField(max_length=100)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-    color = ColorField(default='#FFFFFF')
 
 class Project(models.Model):
     name = models.CharField(max_length=100)
@@ -28,10 +24,10 @@ class Project(models.Model):
         self.slug = s
         super().save(*args, **kwargs)
 
-class Task(models.Model):
+class Note(models.Model):
     name = models.CharField(max_length=100)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-    labels = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True)
+    text = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
 
 
