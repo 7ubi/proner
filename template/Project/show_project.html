@@ -19,36 +19,42 @@
 
     </table>
 
-    <table class="table">
+    <table id="notes" class="table">
         <thead>
-            <tr>
-                {% for label in labels %}
-                    <th scope="col">
-                        {{ label.name }}
-                    </th>
-                {% endfor %}
-            </tr>
+            <th style="width: 25%">
+                Name
+            </th>
+            <th>
+                Text
+            </th>
         </thead>
         <tbody>
-            {% for tasks in tasks_by_label %}
-                <tr>
-                    {% for task in tasks %}
-                        <td>
-                            {{ task.name }}
-                        </td>
-                    {% endfor %}
+
+            {% for note in notes %}
+                <tr id="{{ note.name }}" data-bs-toggle="modal" data-bs-target="#show_note">
+                    <td>
+                        {{ note.name }}
+                    </td>
+                    <td>
+                        {{ note.text }}
+                    </td>
                 </tr>
             {% endfor %}
+
         </tbody>
     </table>
 
-    <button type="button" class="btn btnSec" data-bs-toggle="modal" data-bs-target="#create_task">
-      Create Task
+    <button type="button" class="btn btnSec" data-bs-toggle="modal" data-bs-target="#create_note">
+      Create Note
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="create_task" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        {% include 'Project/create_task.html' %}
+    <div class="modal fade" id="create_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {% include 'Project/create_note.html' %}
+    </div>
+
+    <div class="modal fade" id="show_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {% include 'Project/show_note.html' %}
     </div>
 
 {% endblock %}
@@ -56,5 +62,5 @@
 {% block javascript %}
     {% load static %}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="{% static 'js/create_task.js' %}"></script>
+    <script src="{% static 'js/create_note.js' %}"></script>
 {% endblock %}

@@ -49,3 +49,10 @@ label{
     background-color: #D8F2F2 !important;
     border: 2px solid #293340;
 }
+
+td{
+    max-width: 100px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
