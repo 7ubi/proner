@@ -28,4 +28,5 @@ urlpatterns = [
     path('projects/<slug:slug>/create_task', create_task_view),
     path('login/', login_view),
     path('create-project/', create_project_view),
+    path('getNote/', get_note),
 ]

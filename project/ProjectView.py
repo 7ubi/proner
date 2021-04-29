@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import *
 import json
+from django.core import serializers
 
 
 @login_required
@@ -25,6 +26,7 @@ def project_view(request, slug):
     return render(request, 'Project/show_project.html', {'project': project, 'notes': notes})
 
 
+@login_required
 def create_task_view(request, slug):
     name = request.POST.get('name')
     text = request.POST.get('text')
@@ -35,3 +37,9 @@ def create_task_view(request, slug):
         note = Note(name=name, project=project, text=text, creator=request.user)
         note.save()
     return HttpResponse(json.dumps({'success': True}), content_type='application/json')
+
+
+@login_required
+def get_note(request):
+    return HttpResponse(serializers.serialize("json", Note.objects.filter(name=request.GET.get('name'))),
+                        content_type='application/json')

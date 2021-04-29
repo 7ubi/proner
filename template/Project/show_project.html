@@ -31,7 +31,7 @@
         <tbody>
 
             {% for note in notes %}
-                <tr id="{{ note.name }}" data-bs-toggle="modal" data-bs-target="#show_note">
+                <tr id="{{ note.name }}" data-bs-toggle="modal" data-bs-target="#show_note" onclick="showNote(this)">
                     <td>
                         {{ note.name }}
                     </td>
@@ -63,4 +63,5 @@
     {% load static %}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{% static 'js/create_note.js' %}"></script>
+    <script src="{% static 'js/show_note.js' %}"></script>
 {% endblock %}
