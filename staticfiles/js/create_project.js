@@ -27,12 +27,13 @@ $(document).ready(function ($){
             })
             return;
         }
+
         $.ajax({
-            url:'',
+            url:'/create-project/',
             type:'POST',
             headers:{'X-CSRFToken': csrftoken},
             data:{
-                'name': $('#name').val()
+                'name': $('#name').val(),
             },
             success: function (data){
                 if(data['success']){
@@ -40,6 +41,11 @@ $(document).ready(function ($){
                         icon: 'success',
                         title: 'Project has been saved',
                         confirmButtonText: 'Continue',
+                    }).then(function (){
+                        console.log(data['slug'])
+                        $("#projectList").html(`${$("#projectList").html()}<a href='/projects/${data['slug']}' id='navbg' class='nav-link'>${$('#name').val()}</a>`);
+                        $('#name').val('');
+                        $('#create_project').modal('hide');
                     })
                 }else{
                     Swal.fire({

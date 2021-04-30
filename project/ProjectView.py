@@ -9,13 +9,14 @@ from django.core import serializers
 def create_project_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')
+
         if Project.objects.filter(name=name, creator=request.user).exists():
             return HttpResponse(json.dumps({'success': False, 'error': 'Project already exists'}),
                                 content_type="application/json")
 
         p = Project(name=name, creator=request.user)
         p.save()
-        return HttpResponse(json.dumps({'success': True}), content_type="application/json")
+        return HttpResponse(json.dumps({'success': True, 'slug': Project.objects.get(name=name, creator=request.user).slug}), content_type="application/json")
     return render(request, 'project/create_project.html')
 
 

@@ -4,8 +4,10 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading nav-link" id="navbg"> <h2> <a href="/"  class="nav-link">Proner</a></h2> </div>
       <div class="list-group list-group-flush">
-          {% show_projects %}
-        <a href="/create-project" id="navbg" class="nav-link"> <i class="fas fa-plus-circle"></i></a>
+          <div id="projectList">
+            {% show_projects %}
+          </div>
+          <i style="margin:auto;" data-bs-toggle="modal" data-bs-target="#create_project" class="fas fa-plus-circle"></i>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -13,30 +15,34 @@
 <!-- Page Content -->
 <div id="page-content-wrapper">
 
-  <nav id="navbg" class="navbar navbar-expand">
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <li>
-                    <span  id="sidebartoggler">
-                        <i id="sidebartogglericon" class="fas fa-ellipsis-v" style="margin-left: 4px"></i>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        <div class="navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li>
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
+      <nav id="navbg" class="navbar navbar-expand">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                  <ul class="navbar-nav mr-auto">
+                      <li>
+                          <span  id="sidebartoggler">
+                            <i id="sidebartogglericon" class="fas fa-ellipsis-v" style="margin-left: 4px"></i>
+                        </span>
+                      </li>
+                  </ul>
+              </div>
+              <div class="navbar-collapse">
+                  <ul class="navbar-nav ml-auto">
+                      <li>
+                        <a class="nav-link" href="/logout">Logout</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+    </nav>
+    <div class="modal fade" id="create_project" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-scrollable">
+            {% include 'Project/create_project.html' %}
         </div>
     </div>
-  </nav>
     <!-- /#page-content-wrapper -->
 <script>
     $("#sidebartoggler").click(function() {

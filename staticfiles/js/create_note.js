@@ -18,7 +18,7 @@ $(document).ready(function ($){
     const csrftoken = getCookie('csrftoken');
     $('form').submit(function (e){
         e.preventDefault();
-        if($('#name').val() === ""){
+        if($('#NodeName').val() === ""){
             Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
@@ -27,24 +27,28 @@ $(document).ready(function ($){
             })
             return;
         }
-        console.log($('#label').val())
+        console.log($('#NodeName').val())
         $.ajax({
             url: $(location).attr('pathname') + '/create_task',
             type:'POST',
             headers:{'X-CSRFToken': csrftoken},
             data:{
-                'name': $('#name').val(),
+                'name': $('#NodeName').val(),
                 'text': $('#text').val(),
             },
             success: function (data){
                 if(data['success']) {
-                    $('#name').val('')
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Note has been saved',
                         confirmButtonText: 'Continue',
                     }).then(function (e){
+                        console.log($('#NodeName').val());
+                        $('#notestable').html($('#notestable').html()+ "<tr id=" + $('#NodeName').val() + "data-bs-toggle='modal' data-bs-target='#show_note' onclick='showNote(this)'><td>" + $('#NodeName').val() + "</td><td>" + $('#text').val() + "</td></tr>")
                         $('#create_task').modal('hide');
+                        $('#NodeName').val('');
+                        $('#text').val('');
                     })
                 }else{
                     Swal.fire({

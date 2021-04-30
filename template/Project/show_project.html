@@ -28,8 +28,7 @@
                 Text
             </th>
         </thead>
-        <tbody>
-
+        <tbody id="notestable">
             {% for note in notes %}
                 <tr id="{{ note.name }}" data-bs-toggle="modal" data-bs-target="#show_note" onclick="showNote(this)">
                     <td>
@@ -40,7 +39,6 @@
                     </td>
                 </tr>
             {% endfor %}
-
         </tbody>
     </table>
 
