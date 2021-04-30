@@ -44,17 +44,18 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btnSec" data-bs-toggle="modal" data-bs-target="#create_note">
-      Create Note
-    </button>
+    <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#create_note"></i>
 
     <!-- Modal -->
     <div class="modal fade" id="create_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        {% include 'Project/create_note.html' %}
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-scrollable">
+            {% include 'Project/create_note.html' %}
+        </div>
     </div>
-
     <div class="modal fade" id="show_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        {% include 'Project/show_note.html' %}
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-scrollable">
+            {% include 'Project/show_note.html' %}
+        </div>
     </div>
 
 {% endblock %}

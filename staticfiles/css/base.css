@@ -56,3 +56,10 @@ td{
    text-overflow: ellipsis;
    white-space: nowrap;
 }
+
+
+@media screen and (min-width: 1200px) {
+    .modal-dialog {
+        max-width: 1200px; /* New width for default modal */
+    }
+}

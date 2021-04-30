@@ -5,7 +5,7 @@
       <div class="sidebar-heading nav-link" id="navbg"> <h2> <a href="/"  class="nav-link">Proner</a></h2> </div>
       <div class="list-group list-group-flush">
           {% show_projects %}
-        <a href="/create-project" id="navbg" class="nav-link"> + Create Project</a>
+        <a href="/create-project" id="navbg" class="nav-link"> <i class="fas fa-plus-circle"></i></a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -22,7 +22,9 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
                 <li>
-                    <button class="btn btnSec" id="menu-toggle"><<</button>
+                    <span  id="sidebartoggler">
+                        <i id="sidebartogglericon" class="fas fa-ellipsis-v" style="margin-left: 4px"></i>
+                    </span>
                 </li>
             </ul>
         </div>
@@ -37,12 +39,14 @@
   </nav>
     <!-- /#page-content-wrapper -->
 <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        if($("#menu-toggle").text() == "<<"){
-            $("#menu-toggle").text(">>");
+    $("#sidebartoggler").click(function() {
+        console.log("hey");
+        if($("#sidebartogglericon").hasClass("fa-ellipsis-h")){
+            $("#sidebartogglericon").removeClass("fa-ellipsis-h");
+            $("#sidebartogglericon").addClass("fa-ellipsis-v");
         }else{
-            $("#menu-toggle").text("<<");
+            $("#sidebartogglericon").removeClass("fa-ellipsis-v");
+            $("#sidebartogglericon").addClass("fa-ellipsis-h");
         }
         $("#wrapper").toggleClass("toggled");
     });
