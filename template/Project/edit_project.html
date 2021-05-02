@@ -1,0 +1,21 @@
+<form id="edit_project">
+    {% csrf_token %}
+    <div class="modal-dialog">
+        <div class="modal-content modal_bg">
+            <div class="modal-header">
+                <h5 class="modal-title" id="NoteName" style="color: black">Edit Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="name" style="color: black">
+                    Project name:
+                </label>
+                <input type="text" id="editProjectName" name="name" placeholder="Project name..." class="form-control form-input">
+                <div class="d-flex mt-3">
+                    <button id="deleteProject" type="button" class="btn btnDan" style="margin-right: 5px">Delete Project</button>
+                    <input class="btn btnSec" type="submit" value="Save">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

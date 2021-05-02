@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import *
 import json
@@ -27,6 +27,7 @@ def project_view(request, slug):
     return render(request, 'Project/show_project.html', {'project': project, 'notes': notes})
 
 
+
 @login_required
 def create_task_view(request, slug):
     name = request.POST.get('name')
@@ -44,3 +45,17 @@ def create_task_view(request, slug):
 def get_note(request):
     return HttpResponse(serializers.serialize("json", Note.objects.filter(name=request.GET.get('name'))),
                         content_type='application/json')
+
+
+@login_required
+def delete_project(request):
+    slug = request.POST.get("project")
+    project = Project.objects.filter(creator=request.user, slug=slug)
+    project.delete()
+
+    return redirect("/")
+
+
+
+
+

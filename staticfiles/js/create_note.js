@@ -16,7 +16,7 @@ $(document).ready(function ($){
         return cookieValue;
     }
     const csrftoken = getCookie('csrftoken');
-    $('form').submit(function (e){
+    $('#create_task_form').submit(function (e){
         e.preventDefault();
         if($('#NodeName').val() === ""){
             Swal.fire({
@@ -44,9 +44,8 @@ $(document).ready(function ($){
                         title: 'Note has been saved',
                         confirmButtonText: 'Continue',
                     }).then(function (e){
-                        console.log($('#NodeName').val());
-                        $('#notestable').html($('#notestable').html()+ "<tr id=" + $('#NodeName').val() + "data-bs-toggle='modal' data-bs-target='#show_note' onclick='showNote(this)'><td>" + $('#NodeName').val() + "</td><td>" + $('#text').val() + "</td></tr>")
-                        $('#create_task').modal('hide');
+                        $('#notestable').html($('#notestable').html()+ "<tr id='" + $('#NodeName').val() + "' data-bs-toggle='modal' data-bs-target='#show_note' onclick='showNote(this)'><td>" + $('#NodeName').val() + "</td><td>" + $('#text').val() + "</td></tr>")
+                        $('#create_note').modal('hide');
                         $('#NodeName').val('');
                         $('#text').val('');
                     })

@@ -26,6 +26,7 @@ urlpatterns = [
     path('signup/check_username', check_username),
     path('projects/<slug:slug>', project_view),
     path('projects/<slug:slug>/create_task', create_task_view),
+    path('deleteProject', delete_project),
     path('login/', login_view),
     path('create-project/', create_project_view),
     path('getNote/', get_note),

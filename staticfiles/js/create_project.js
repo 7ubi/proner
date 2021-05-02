@@ -16,7 +16,7 @@ $(document).ready(function ($){
         return cookieValue;
     }
     const csrftoken = getCookie('csrftoken');
-    $('form').submit(function (e){
+    $('#create_project').submit(function (e){
         e.preventDefault();
         if($('#name').val() === ""){
             Swal.fire({

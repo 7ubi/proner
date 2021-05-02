@@ -3,7 +3,7 @@
 {% block hero %}
     <div class="d-flex">
         <div class="p-2">
-            <h1>{{ project.name }}</h1>
+            <h1 id="projectNameDisplayed">{{ project.name }} <i id="edit" class="fas fa-edit fa-xs" data-bs-toggle="modal" data-bs-target="#edit_project"></i></h1>
         </div>
         <div class="mt-auto ms-auto p-2">
             <p>
@@ -12,6 +12,11 @@
         </div>
     </div>
 
+    <div class="modal fade" id="edit_project" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-scrollable">
+            {% include 'Project/edit_project.html' %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -63,4 +68,5 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{% static 'js/create_note.js' %}"></script>
     <script src="{% static 'js/show_note.js' %}"></script>
+    <script src="{% static 'js/edit_project.js' %}"></script>
 {% endblock %}
