@@ -17,17 +17,15 @@ $(document).ready(function () {
     }
     const csrftoken = getCookie('csrftoken');
 
-    let project = "";
+    let project = window.location.pathname.split("/")[2];
 
     $("#deleteProject").click(function () {
-        project = window.location.pathname.split("/")[2];
         Swal.fire({
             icon: 'question',
             title: 'Do you really want to delete this project?',
             confirmButtonText: 'Continue',
             showCancelButton: true,
         }).then( isConfirm => {
-            console.log(isConfirm.isConfirmed);
             if(isConfirm.isConfirmed) {
                 $.ajax({
                     url: '/deleteProject',
@@ -41,9 +39,48 @@ $(document).ready(function () {
                             icon: 'success',
                             title: 'Project has been deleted!',
                             confirmButtonText: 'Continue',
-                        }).then(function (e) {
+                        }).then(function () {
                             document.location.href = '/';
                         })
+                    }
+                })
+            }
+        })
+    })
+
+    $('#edit_project').submit(function (e){
+        e.preventDefault();
+        Swal.fire({
+            icon: 'question',
+            title: 'Do you really want to change this project?',
+            confirmButtonText: 'Continue',
+            showCancelButton: true,
+        }).then( isConfirm => {
+            if (isConfirm.isConfirmed) {
+                $.ajax({
+                    url: '/edit-project',
+                    type: 'POST',
+                    headers: {'X-CSRFToken': csrftoken},
+                    data: {
+                        'project': project,
+                        'name': $('#editProjectName').val(),
+                    },
+                    success: function (data){
+                        if(data['slug'] !== '') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Project has been changed!',
+                                confirmButtonText: 'Continue',
+                            }).then(function () {
+                                document.location.href = '/projects/' + data['slug'];
+                            })
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Project already exists!',
+                                confirmButtonText: 'Continue',
+                            })
+                        }
                     }
                 })
             }

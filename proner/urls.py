@@ -29,5 +29,6 @@ urlpatterns = [
     path('deleteProject', delete_project),
     path('login/', login_view),
     path('create-project/', create_project_view),
+    path('edit-project', edit_project),
     path('getNote/', get_note),
 ]

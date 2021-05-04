@@ -16,7 +16,9 @@ def create_project_view(request):
 
         p = Project(name=name, creator=request.user)
         p.save()
-        return HttpResponse(json.dumps({'success': True, 'slug': Project.objects.get(name=name, creator=request.user).slug}), content_type="application/json")
+        return HttpResponse(
+            json.dumps({'success': True, 'slug': Project.objects.get(name=name, creator=request.user).slug}),
+            content_type="application/json")
     return render(request, 'project/create_project.html')
 
 
@@ -25,7 +27,6 @@ def project_view(request, slug):
     project = Project.objects.get(slug=slug, creator=request.user)
     notes = Note.objects.filter(creator=request.user, project=project)
     return render(request, 'Project/show_project.html', {'project': project, 'notes': notes})
-
 
 
 @login_required
@@ -56,6 +57,26 @@ def delete_project(request):
     return redirect("/")
 
 
+def edit_project(request):
+    slug = request.POST.get("project")
+    project = Project.objects.filter(creator=request.user, slug=slug).first()
+    name = request.POST.get("name")
+    if Project.objects.filter(creator=request.user, name=name).exists():
+        return HttpResponse(json.dumps({'slug': ''}), content_type='application/json')
+    else:
+        project.name = name
 
+        s = slugify(project.name)
 
+        slugExists = Project.objects.filter(slug=s).exists()
 
+        n = 1
+        while slugExists:
+            s = slugify(project.name + str(n))
+            slugExists = Project.objects.filter(slug=s).exists()
+            n += 1
+
+        project.slug = s
+        project.save()
+
+        return HttpResponse(json.dumps({'slug': s}), content_type='application/json')
