@@ -37,14 +37,14 @@ $(document).ready(function ($){
                 'text': $('#text').val(),
             },
             success: function (data){
-                if(data['success']) {
+                if(data['id'] !== 0) {
 
                     Swal.fire({
                         icon: 'success',
                         title: 'Note has been saved',
                         confirmButtonText: 'Continue',
                     }).then(function (e){
-                        $('#notestable').html($('#notestable').html()+ "<tr id='" + $('#NodeName').val() + "' data-bs-toggle='modal' data-bs-target='#show_note' onclick='showNote(this)'><td>" + $('#NodeName').val() + "</td><td>" + $('#text').val() + "</td></tr>")
+                        $('#notestable').html($('#notestable').html()+ "<tr id='" + data['id'] + "' data-bs-toggle='modal' data-bs-target='#show_note' onclick='showNote(this)'><td>" + $('#NodeName').val() + "</td><td>" + $('#text').val() + "</td></tr>")
                         $('#create_note').modal('hide');
                         $('#NodeName').val('');
                         $('#text').val('');

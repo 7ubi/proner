@@ -30,21 +30,21 @@ def project_view(request, slug):
 
 
 @login_required
-def create_task_view(request, slug):
+def create_note_view(request, slug):
     name = request.POST.get('name')
     text = request.POST.get('text')
     project = Project.objects.get(slug=slug)
     if Note.objects.filter(name=name).exists():
-        return HttpResponse(json.dumps({'success': False}), content_type='application/json')
-    else:
-        note = Note(name=name, project=project, text=text, creator=request.user)
-        note.save()
-    return HttpResponse(json.dumps({'success': True}), content_type='application/json')
+        return HttpResponse(json.dumps({'id': 0}), content_type='application/json')
+
+    note = Note(name=name, project=project, text=text, creator=request.user)
+    note.save()
+    return HttpResponse(json.dumps({'id': note.id}), content_type='application/json')
 
 
 @login_required
 def get_note(request):
-    return HttpResponse(serializers.serialize("json", Note.objects.filter(name=request.GET.get('name'))),
+    return HttpResponse(serializers.serialize("json", Note.objects.filter(id=request.GET.get('id'))),
                         content_type='application/json')
 
 
@@ -80,3 +80,29 @@ def edit_project(request):
         project.save()
 
         return HttpResponse(json.dumps({'slug': s}), content_type='application/json')
+
+
+@login_required
+def delete_note(request):
+    print(request.POST.get("note"))
+    noteId = int(float(request.POST.get("note")))
+
+    note = Note.objects.filter(id=noteId)
+    note.delete()
+
+    return HttpResponse(json.dumps({'id': noteId}), content_type='application/json')
+
+
+@login_required
+def edit_note(request):
+    noteId = request.POST.get('note')
+    name = request.POST.get('name')
+    text = request.POST.get('text')
+
+    note = Note.objects.filter(id=noteId).first()
+    note.name = name
+    note.text = text
+
+    note.save()
+
+    return HttpResponse(serializers.serialize("json", Note.objects.filter(id=noteId)), content_type='application/json')

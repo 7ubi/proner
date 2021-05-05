@@ -17,30 +17,48 @@ $(document).ready(function () {
     }
     const csrftoken = getCookie('csrftoken');
 
-    let project = window.location.pathname.split("/")[2];
+    let note;
 
-    $("#deleteProject").click(function () {
+    showNote = function (e){
+        note = e.id;
+        $.ajax({
+            url: '/getNote/',
+            data: {
+                'id': e.id,
+            },
+            success: function (data){
+                $("#NoteNameShow").html(data[0].fields["name"]);
+                $("#NoteText").html(data[0].fields["text"].replace(/(?:\r\n|\r|\n)/g, '<br />'));
+                $("#NodeNameEdit").val(data[0].fields["name"]);
+                $("#text_edit").val(data[0].fields["text"]);
+            }
+        })
+    }
+
+    $("#deleteNote").click(function () {
         Swal.fire({
             icon: 'question',
-            title: 'Do you really want to delete this project?',
+            title: 'Do you really want to delete this Note?',
             confirmButtonText: 'Continue',
             showCancelButton: true,
         }).then( isConfirm => {
             if(isConfirm.isConfirmed) {
                 $.ajax({
-                    url: '/deleteProject',
+                    url: '/delete-note',
                     type: 'POST',
                     headers: {'X-CSRFToken': csrftoken},
                     data: {
-                        'project': project,
+                        'note': note,
                     },
-                    success: function () {
+                    success: function (data) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Project has been deleted!',
+                            title: 'Note has been deleted!',
                             confirmButtonText: 'Continue',
                         }).then(function () {
-                            document.location.href = '/';
+                            $("#show_note").modal('hide');
+                            $("#edit_note").modal('hide');
+                            $("#" + data['id']).remove();
                         })
                     }
                 })
@@ -48,12 +66,12 @@ $(document).ready(function () {
         })
     })
 
-    $('#edit_project').submit(function (e){
+    $('#edit_note_form').submit(function (e){
         e.preventDefault();
-        if($('#editProjectName').val() === ""){
+        if($('#NodeNameEdit').val() === "" || $('#text_edit').val() === ""){
             Swal.fire({
                 icon: 'error',
-                title: 'Project must have a name!',
+                title: 'Note must have a name!',
                 confirmButtonText: 'Continue',
             })
             return;
@@ -67,29 +85,26 @@ $(document).ready(function () {
         }).then( isConfirm => {
             if (isConfirm.isConfirmed) {
                 $.ajax({
-                    url: '/edit-project',
+                    url: '/edit-note',
                     type: 'POST',
                     headers: {'X-CSRFToken': csrftoken},
                     data: {
-                        'project': project,
-                        'name': $('#editProjectName').val(),
+                        'note': note,
+                        'name': $('#NodeNameEdit').val(),
+                        'text': $('#text_edit').val(),
                     },
                     success: function (data){
-                        if(data['slug'] !== '') {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Project has been changed!',
-                                confirmButtonText: 'Continue',
-                            }).then(function () {
-                                document.location.href = '/projects/' + data['slug'];
-                            })
-                        }else{
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Project already exists!',
-                                confirmButtonText: 'Continue',
-                            })
-                        }
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Note has been changed!',
+                            confirmButtonText: 'Continue',
+                        }).then(function () {
+                            $("#NoteNameShow").html($('#NodeNameEdit').val());
+                            $("#NoteText").html($('#text_edit').val().replace(/(?:\r\n|\r|\n)/g, '<br />'));
+                            $("#" + note).children("#NoteNameDisplay").html($('#NodeNameEdit').val());
+                            $("#" + note).children("#NoteTextDisplay").html($('#text_edit').val());
+                            $("#edit_note").modal('hide');
+                        })
                     }
                 })
             }

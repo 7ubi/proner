@@ -25,10 +25,12 @@ urlpatterns = [
     path('signup', register_view),
     path('signup/check_username', check_username),
     path('projects/<slug:slug>', project_view),
-    path('projects/<slug:slug>/create_task', create_task_view),
+    path('projects/<slug:slug>/create_task', create_note_view),
     path('deleteProject', delete_project),
     path('login/', login_view),
     path('create-project/', create_project_view),
+    path('delete-note', delete_note),
+    path('edit-note', edit_note),
     path('edit-project', edit_project),
     path('getNote/', get_note),
 ]

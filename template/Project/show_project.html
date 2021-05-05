@@ -35,11 +35,11 @@
         </thead>
         <tbody id="notestable">
             {% for note in notes %}
-                <tr id="{{ note.name }}" data-bs-toggle="modal" data-bs-target="#show_note" onclick="showNote(this)">
-                    <td>
+                <tr id="{{ note.id }}" data-bs-toggle="modal" data-bs-target="#show_note" onclick="showNote(this)">
+                    <td id="NoteNameDisplay">
                         {{ note.name }}
                     </td>
-                    <td>
+                    <td id="NoteTextDisplay">
                         {{ note.text }}
                     </td>
                 </tr>
@@ -61,12 +61,17 @@
         </div>
     </div>
 
+    <div class="modal fade" id="edit_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-scrollable">
+            {% include 'Project/edit_note.html' %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
     {% load static %}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{% static 'js/create_note.js' %}"></script>
-    <script src="{% static 'js/show_note.js' %}"></script>
     <script src="{% static 'js/edit_project.js' %}"></script>
+    <script src="{% static 'js/edit_note.js' %}"></script>
 {% endblock %}
